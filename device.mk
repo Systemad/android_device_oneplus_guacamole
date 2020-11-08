@@ -1,10 +1,11 @@
-
 LOCAL_PATH := device/asus/I001D
+
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # define hardware platform
 PRODUCT_PLATFORM := msmnile
 
-#TEST
 # A/B support
 AB_OTA_UPDATER := true
 
@@ -22,14 +23,26 @@ PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
     update_engine \
-    update_engine_sideload \
     update_verifier
+
+PRODUCT_PACKAGES += \
+    bootctrl.$(PRODUCT_PLATFORM) \
+    update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
+
+# qcom standard decryption
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
+
+# tzdata
+PRODUCT_PACKAGES += \
+    tzdata_twrp
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
@@ -39,7 +52,7 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl-wrapper \
     android.hardware.boot@1.0-impl.recovery \
     bootctrl.$(PRODUCT_PLATFORM) \
-    bootctrl.$(PRODUCT_PLATFORM).recovery \
+    bootctrl.$(PRODUCT_PLATFORM).recovery
 
 PRODUCT_HOST_PACKAGES += \
     libandroidicu
@@ -48,6 +61,19 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
-# ASUS otacert
-PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/asus
+# Blacklist
+PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
+    ro.bootimage.build.date.utc \
+    ro.build.date.utc
+
+# Overrides
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=WW_I001D \
+    BUILD_PRODUCT=ZS660KL \
+    TARGET_DEVICE=ASUS_I001_1
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.build.security_patch=2099-12-31
+
+# Include ASUS keys for zip signature verification
+PRODUCT_EXTRA_RECOVERY_KEYS += $(LOCAL_PATH)/security/asus
