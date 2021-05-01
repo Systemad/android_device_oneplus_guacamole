@@ -28,18 +28,16 @@ DEVICE_PATH := device/$(PRODUCT_BRAND)/$(TARGET_DEVICE)
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-a
+TARGET_ARCH_VARIANT := armv8-2a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := generic
-TARGET_CPU_VARIANT_RUNTIME := kryo385
+TARGET_CPU_VARIANT := cortex-a75
 
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_ARCH_VARIANT := armv8-2a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := $(TARGET_CPU_VARIANT)
-TARGET_2ND_CPU_VARIANT_RUNTIME := $(TARGET_CPU_VARIANT_RUNTIME)
+TARGET_2ND_CPU_VARIANT := cortex-a75
 
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
@@ -63,15 +61,24 @@ BOARD_KERNEL_CMDLINE := \
     swiotlb=2048 \
     video=vfb:640x400,bpp=32,memsize=3072000
 #BOARD_KERNEL_CMDLINE += loop.max_part=7
+
+# Kernel
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbcontroller=a600000.dwc3 skip_override androidboot.fastboot=1
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
+TARGET_PREBUILT_KERNEL := device/oneplus/guacamole/prebuilt/Image.gz
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_PREBUILT_DTBIMAGE_DIR := device/oneplus/guacamole/prebuilt/dtb.img
+BOARD_DTB_OFFSET := 0x01f00000
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION) --dtb_offset $(BOARD_DTB_OFFSET) --dtb $(BOARD_PREBUILT_DTBIMAGE_DIR)
 
 # Platform
-TARGET_BOARD_PLATFORM := $(TARGET_BOOTLOADER_BOARD_NAME)
+# Platform
+TARGET_BOARD_PLATFORM := msmnile
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno640
-QCOM_BOARD_PLATFORMS += $(TARGET_BOARD_PLATFORM)
+QCOM_BOARD_PLATFORMS += msmnile
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
@@ -95,10 +102,6 @@ BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
-
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_$(TARGET_DEVICE)
-TARGET_RECOVERY_DEVICE_MODULES := libinit_$(TARGET_DEVICE)
 
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -157,7 +160,7 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
 TARGET_USES_MKE2FS := true
 
 # Encryption
-PLATFORM_VERSION := 16.1.0
+PLATFORM_VERSION := 20.1.0
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 TW_INCLUDE_CRYPTO := true
@@ -168,7 +171,7 @@ BOARD_USES_QCOM_FBE_DECRYPTION := true
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # TWRP specific build flags
-TW_HAPTICS_TSPDRV := true
+#TW_HAPTICS_TSPDRV := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 USE_RECOVERY_INSTALLER := true
 RECOVERY_INSTALLER_PATH := bootable/recovery/installer

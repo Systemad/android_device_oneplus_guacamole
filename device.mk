@@ -1,4 +1,4 @@
-LOCAL_PATH := device/asus/I001D
+LOCAL_PATH := device/oneplus/guacamole
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
@@ -67,7 +67,7 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
     ro.build.date.utc
 
 # Overrides
-PRODUCT_BUILD_PROP_OVERRIDES += \
+#PRODUCT_BUILD_PROP_OVERRIDES += \
     PRODUCT_NAME=WW_I001D \
     BUILD_PRODUCT=ZS660KL \
     TARGET_DEVICE=ASUS_I001_1
@@ -75,5 +75,3 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.build.security_patch=2099-12-31
 
-# Include ASUS keys for zip signature verification
-PRODUCT_EXTRA_RECOVERY_KEYS += $(LOCAL_PATH)/security/asus

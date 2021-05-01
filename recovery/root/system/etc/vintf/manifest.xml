@@ -2,8 +2,9 @@
     Input:
         manifest.xml
         framework_manifest.xml
+        framework_manifest.xml
 -->
-<manifest version="1.0" type="framework">
+<manifest version="2.0" type="framework">
     <hal format="hidl">
         <name>android.frameworks.displayservice</name>
         <transport>hwbinder</transport>
@@ -86,8 +87,17 @@
     </hal>
     <hal format="native">
         <name>netutils-wrapper</name>
-        <transport></transport>
         <version>1.0</version>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.qti.hardware.qccsyshal</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IQccsyshal</name>
+            <instance>qccsyshal</instance>
+        </interface>
+        <fqname>@1.0::IQccsyshal/qccsyshal</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.qti.hardware.radio.atcmdfwd</name>
@@ -109,11 +119,34 @@
         </interface>
         <fqname>@1.0::Isigma_miracast/sigmahal</fqname>
     </hal>
-    <vendor-ndk>
-        <version>29</version>
-    </vendor-ndk>
+    <hal format="hidl">
+        <name>vendor.qti.hardware.systemhelper</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>ISystemEvent</name>
+            <instance>default</instance>
+        </interface>
+        <interface>
+            <name>ISystemResource</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.0::ISystemEvent/default</fqname>
+        <fqname>@1.0::ISystemResource/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.qti.hardware.wifi.keystore</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IKeystoreExt</name>
+            <instance>default</instance>
+        </interface>
+        <fqname>@1.0::IKeystoreExt/default</fqname>
+    </hal>
     <system-sdk>
         <version>28</version>
         <version>29</version>
+        <version>30</version>
     </system-sdk>
 </manifest>

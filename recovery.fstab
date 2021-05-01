@@ -57,9 +57,6 @@
 /dev/block/bootdevice/by-name/fsc                       /efsc                  emmc    defaults                                                                                         backup=1,subpartitionof=/efs1
 /dev/block/bootdevice/by-name/fsg                       /efsg                  emmc    defaults                                                                                         backup=1,subpartitionof=/efs1
 
-/dev/block/bootdevice/by-name/asusfw                    /asusfw                ext4    ro,nosuid,noatime,nodev,barrier=1,noauto_da_alloc                                                wait,slotselect,display="ASUS-specific Firmware",backup=1
-/dev/block/bootdevice/by-name/batinfo                   /batinfo               ext4    ro,nosuid,noatime,nodev,barrier=1,noauto_da_alloc                                                wait,display="Battery Info",backup=1
-/dev/block/bootdevice/by-name/xrom                      /xrom                  ext4    ro,nosuid,noatime,nodev,barrier=1,noauto_da_alloc                                                wait,slotselect,display="ASUS Extra ROM Files"
 
 # Removable storage
 /dev/block/sdh1                                         /usbstorage            vfat    utf8                                                                                             display="USB Storage",storage,wipeingui,removable

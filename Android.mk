@@ -25,7 +25,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),I001D)
+ifeq ($(TARGET_DEVICE),guacamole)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
